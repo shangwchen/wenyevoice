@@ -11,7 +11,6 @@ class SettingsManager {
         loadSettings();
     }
 
-    // 加载设置
     public void loadSettings() {
         try (InputStream input = new FileInputStream(settingsFile)) {
             properties.load(input);
@@ -20,7 +19,6 @@ class SettingsManager {
         }
     }
 
-    // 保存设置
     public void saveSettings() {
         try (OutputStream output = new FileOutputStream(settingsFile)) {
             properties.store(output, "应用设置");
@@ -29,12 +27,11 @@ class SettingsManager {
         }
     }
 
-    // 获取设置
     public String getSetting(String key, String defaultValue) {
         return properties.getProperty(key, defaultValue);
     }
 
-    // 设置并保存
+
     public void setSetting(String key, String value) {
         properties.setProperty(key, value);
     }

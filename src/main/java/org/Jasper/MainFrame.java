@@ -8,18 +8,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Vector;
 import java.util.*;
 import java.util.List;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
-import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -163,7 +158,7 @@ class MainFrame extends JFrame {
 
         toggleImageLabel = new JLabel();
         toggleImageLabel.setVisible(false);
-        String imagePath = "src/main/resources/111.png";
+        String imagePath = getClass().getClassLoader().getResource("111.png").getPath();
         ImageIcon icon = new ImageIcon(imagePath);
 
         if (icon.getIconWidth() > 0 && icon.getIconHeight() > 0) {
@@ -345,7 +340,7 @@ class MainFrame extends JFrame {
     }
 
     private void addDefaultImage(JLayeredPane layeredPane) {
-        String imagePath = "src/main/resources/000.jpg";
+        String imagePath = getClass().getClassLoader().getResource("000.jpg").getPath();
         ImageIcon icon = new ImageIcon(imagePath);
 
         if (icon.getIconWidth() > 0 && icon.getIconHeight() > 0) {
