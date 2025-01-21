@@ -41,6 +41,7 @@ class MainFrame extends JFrame {
         setSize(800, 1000);
         setLayout(new BorderLayout());
 
+        loadWordCategories();
 
         getContentPane().setBackground(Color.BLACK);
 
@@ -60,6 +61,13 @@ class MainFrame extends JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 initialClick = e.getPoint();
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveWordCategories(); // 在关闭程序时保存数据
             }
         });
 
@@ -763,24 +771,34 @@ class MainFrame extends JFrame {
         try (FileWriter writer = new FileWriter(SAVE_FILE_PATH)) {
             Gson gson = new Gson();
             gson.toJson(wordCategories, writer);
+            System.out.println("词语分类已保存至 " + SAVE_FILE_PATH);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "保存词语分类失败：" + e.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+
     private void loadWordCategories() {
-        try (FileReader reader = new FileReader(SAVE_FILE_PATH)) {
+        File file = new File(SAVE_FILE_PATH);
+        if (!file.exists()) {
+            System.out.println("未找到保存文件，使用默认词语分类。");
+            wordCategories.put("常用词", new ArrayList<>(Arrays.asList("甜美", "磁性", "温暖", "清脆", "柔和")));
+            return;
+        }
+
+        try (FileReader reader = new FileReader(file)) {
             Gson gson = new Gson();
             java.lang.reflect.Type type = new TypeToken<Map<String, List<String>>>() {}.getType();
             wordCategories = gson.fromJson(reader, type);
             if (wordCategories == null) {
                 wordCategories = new LinkedHashMap<>();
+                System.out.println("文件内容为空，已初始化为默认分类。");
             }
         } catch (IOException e) {
-            // 如果文件不存在或读取失败，使用默认分类
-            wordCategories.put("常用词", new ArrayList<>(Arrays.asList("甜美", "磁性", "温暖", "清脆", "柔和")));
+            JOptionPane.showMessageDialog(this, "加载词语分类失败：" + e.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     private void showWordSelectionPopup() {
         // 如果弹窗已存在且可见，则不重新创建

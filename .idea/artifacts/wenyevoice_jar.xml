@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="wenyevoice:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/wenyevoice_jar</output-path>
+    <root id="archive" name="wenyevoice.jar">
+      <element id="module-output" name="wenyevoice" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar" path-in-jar="/" />
+      <element id="module-source" name="wenyevoice" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources" />
+    </root>
+  </artifact>
+</component>
